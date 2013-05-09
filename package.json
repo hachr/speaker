@@ -1,0 +1,11 @@
+{
+  "name": "speaker",
+  "description": "Simple speaker",
+  "version": "0.1.0",
+  "author": "hachr",
+  "dependencies": {
+    "nodeunit": "*",
+    "lame": "*",
+    "speaker": "*"
+  }
+}
