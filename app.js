@@ -10,7 +10,7 @@ function stream(host, path) {
   }, function (res) {
     play(res);
     res.on('end', function () {
-      console.log('done');
+      console.log('Done reading');
     });
   });
 }
@@ -18,14 +18,21 @@ function stream(host, path) {
 function loadFile(file) {
   var fs = require('fs').createReadStream(file);
   play(fs);
+  fs.on('close', function () {
+    console.log('Done reading');
+  });
 }
 
 function play(input) {
   input.pipe(new lame.Decoder())
     .on('format', function (format) {
       console.log("Format %s", JSON.stringify(format));
-      this.pipe(new Speaker(format));
-    });
+      var speaker = new Speaker(format);
+      this.pipe(speaker);
+      speaker.on('finish', function () {
+        console.log("Finished!");
+      });
+    })
 }
 
 
